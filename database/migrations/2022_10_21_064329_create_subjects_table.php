@@ -17,7 +17,8 @@ class CreateSubjectsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->integer('hour')->nullable();
+            $table->time('hour')->nullable();
+            $table->double('unit')->nullable();
             $table->integer('level')->nullable();
             $table->string('status')->default('Active');
             $table->softDeletes();

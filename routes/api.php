@@ -122,6 +122,10 @@ Route::group(['middleware' => 'auth:api'], function () {
         Route::get('reset-substitute-status',[App\Http\Controllers\API\SettingController::class,'reset_substitute_status']);
         Route::post('update-profile-image',[App\Http\Controllers\API\SettingController::class,'update_profile_image']);
     });
+    Route::group(['prefix' => 'teacher-load'], function () {
+        Route::get('list',[App\Http\Controllers\API\TeacherLoadController::class,'index']);
+        Route::get('loads/{id}',[App\Http\Controllers\API\TeacherLoadController::class,'show']);
+    });
 });
 
 

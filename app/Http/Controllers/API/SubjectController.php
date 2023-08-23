@@ -52,12 +52,19 @@ class SubjectController extends Controller
         $this->validate($request,[
             'code' => 'required|string|unique:subjects,code',
             'name' => 'required|string|unique:subjects,name',
+            'unit' => 'required|numeric',
+            'hour' => 'required|numeric',
+            'minute' => 'required|numeric',
             'level' => 'required|integer',
         ]);
+        $request->merge(['hour' => $request->hour.':'.$request->minute.':00']);
+        $request->request->remove('minute');
         Subject::create([
             'code' => $request->code,
             'name' => $request->name,
             'level' => $request->level,
+            'hour' => $request->hour,
+            'unit' => $request->unit,
         ]);
         return response(['message' => 'success'], 200);
     }
@@ -86,6 +93,8 @@ class SubjectController extends Controller
         $this->validate($request,[
             'code' => 'required|string|unique:subjects,code,'.$request->id,
             'name' => 'required|string|unique:subjects,name,'.$request->id,
+            'unit' => 'required|integer',
+            'hour' => 'required|time',
             'level' => 'required|integer',
         ]);
         $subject = Subject::findOrFail($id);
@@ -93,6 +102,8 @@ class SubjectController extends Controller
             'code' => $request->code,
             'name' => $request->name,
             'level' => $request->level,
+            'hour' => $request->hour,
+            'unit' => $request->unit,
         ]);
     }
 

@@ -168,7 +168,7 @@
                             <button type="button" class="btn btn-primary" @click="saveSchoolLogo">Save</button>
                         </div>
                     </div>
-                   
+
                 </div>
             </div>
         </div>
@@ -235,7 +235,7 @@ export default {
                     });
                 }
             })
-           
+
         },
         loadSchoolYear(){
             axios.get('/api/settings/index-school-year')

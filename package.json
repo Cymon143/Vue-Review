@@ -27,6 +27,7 @@
         "admin-lte": "3.1",
         "axios": "^0.27.2",
         "laravel-permission-to-vuejs": "^2.0.5",
+        "moment": "^2.29.4",
         "sweetalert2": "^11.4.35",
         "v-calendar": "^2.4.1",
         "vform": "^2.1.2",

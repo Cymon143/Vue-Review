@@ -37,4 +37,5 @@ class Schedule extends Authenticatable
     {
         return Carbon::create($value)->format('H:i');
     }
+
 }
