@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="{{ asset('/images/spc_logo.png') }}" rel="icon">
+    <link href="{{ $school_logo }}" rel="icon">
     <title>{{ config('app.name', 'San Pedro College') }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
@@ -14,7 +14,7 @@
     <script type="text/javascript">
         window.Laravel = {
             csrfToken: "{{ csrf_token() }}",
-            jsPermissions: {!! auth()->check()?auth()->user()->jsPermissions():0 !!}
+            jsPermissions: {!! auth()->check() ? auth()->user()->jsPermissions() : 0 !!}
         }
     </script>
     <style scoped>
@@ -119,7 +119,7 @@
                         @can('access registrar')
                             <li class="nav-item">
                                 <router-link to="/registrar" class="nav-link">
-                                    <i class="nav-icon fas fa-user-tag"></i>
+                                    <i class="nav-icon fas fa-sign-in-alt"></i>
                                     <p>
                                         Registrar
                                     </p>
@@ -129,7 +129,7 @@
                         @can('access program')
                             <li class="nav-item">
                                 <router-link to="/program" class="nav-link">
-                                    <i class="nav-icon fas fa-user-tag"></i>
+                                    <i class="nav-icon fas fa-book"></i>
                                     <p>
                                         Program
                                     </p>
@@ -192,6 +192,16 @@
                                     <i class="nav-icon fas fa-clock"></i>
                                     <p>
                                         My Schedule
+                                    </p>
+                                </router-link>
+                            </li>
+                        @endcan
+                        @can('access teacher load')
+                            <li class="nav-item">
+                                <router-link to="/teacher-load" class="nav-link">
+                                    <i class="nav-icon fas fa-chalkboard-teacher"></i>
+                                    <p>
+                                        Teacher Load
                                     </p>
                                 </router-link>
                             </li>

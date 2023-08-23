@@ -98,6 +98,7 @@ class SectionController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         abort_if(Gate::denies('edit section'), 403, 'You do not have the required authorization.');
         $this->validate($request,[
             'code' => 'required|string|unique:sections,code,'.$id,
@@ -105,16 +106,11 @@ class SectionController extends Controller
             'level' => 'required|integer',
         ]);
         $section = Section::findOrFail($id);
-        try {
-            $section->update([
-                'adviser_user_id' => $request->advisers['id'],
-                'code' => $request->code,
-                'name' => $request->name,
-                'level' => $request->level,
-            ]);
-        } catch (\Throwable $th) {
-            throw ValidationException::withMessages(['duplicate' => 'The code, name and level already exists']);
-        }
+        $section->adviser_user_id = $request->adviser['id'];
+        $section->code = $request->code;
+        $section->name = $request->name;
+        $section->level = $request->level;
+        $section->save();
         SectionSubject::where('section_id', $id)->delete();
         for ($i=0; $i < count($request->subjects); $i++) {
             SectionSubject::create([

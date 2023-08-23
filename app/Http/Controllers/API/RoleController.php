@@ -52,8 +52,10 @@ class RoleController extends Controller
             'name' => $request->name,
             'guard_name' => $request->guard_name,
         ]);
-        foreach ($request->permissions as $permission) {
-            $role->givePermissionTo($permission['name']);
+        if($request->permissions){
+            foreach ($request->permissions as $permission) {
+                $role->givePermissionTo($permission['name']);
+            }
         }
         return response(['message' => 'success'], 200);
     }

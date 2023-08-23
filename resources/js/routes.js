@@ -17,15 +17,15 @@ const routes = [
         name: 'profile',
         component: require('./components/Profile.vue').default
     },
-//---------------------------------------------------------USER
+    //---------------------------------------------------------USER
     {
         path: '/users',
         name: 'users',
         component: require('./components/Users/IndexUser.vue').default,
         props: true,
     },
-//---------------------------------------------------------END USER
-//---------------------------------------------------------ROLE
+    //---------------------------------------------------------END USER
+    //---------------------------------------------------------ROLE
     {
         path: '/role',
         name: 'role',
@@ -108,19 +108,26 @@ const routes = [
     },
     //---------------------------------------------------------END LEVEL SUBJECT
     //---------------------------------------------------------LEVEL SUBJECT
-      {
+    {
         path: '/settings',
         name: 'settings',
         component: require('./components/Settings.vue').default
     },
-//---------------------------------------------------------END LEVEL SUBJECT
-     //---------------------------------------------------------LEVEL SUBJECT
-     {
+    //---------------------------------------------------------END LEVEL SUBJECT
+    //---------------------------------------------------------LEVEL SUBJECT
+    {
         path: '/schedule-search',
         name: 'schedule-search',
         component: require('./components/ScheduleSearch/IndexScheduleSearch.vue').default
     },
     //---------------------------------------------------------END LEVEL SUBJECT
+    //---------------------------------------------------------TEACHER LOAD
+    {
+        path: '/teacher-load',
+        name: 'teacher-load',
+        component: require('./components/TeacherLoad/IndexTeacherLoad.vue').default
+    },
+    //---------------------------------------------------------END TEACHER LOAD
 ]
 // Vue.component(
 //     'enrollment-status',

@@ -1,5 +1,5 @@
 <template>
-    <div v-if="!can('list subject')">
+    <div v-if="!can('list teacher load')">
         <forbidden/>
     </div>
     <div v-else>
@@ -7,11 +7,11 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Subjects</h1>
+                        <h1 class="m-0">Teacher load</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Subjects</a></li>
+                            <li class="breadcrumb-item"><a href="#">Teacher Load</a></li>
                             <!-- <li class="breadcrumb-item active">Starter Page</li> -->
                         </ol>
                     </div>
@@ -35,16 +35,13 @@
                                     <select v-model="order_by" @change="getData" class="form-control form-control-sm w-auto">
                                         <option value="">Search/Order By</option>
                                         <option value="id">Id</option>
-                                        <option value="code">Code</option>
                                         <option value="name">Name</option>
-                                        <option value="level">Level</option>
-                                        <option value="created_at">Created</option>
                                     </select>
                                     <select v-model="sort_by" @change="getData" class="form-control form-control-sm w-auto">
                                         <option value="ASC">Asc</option>
                                         <option value="DESC">Desc</option>
                                     </select>
-                                    <button class="btn btn-success btn-sm ml-auto" @click="openAddModal" v-if="can('create subject')"><i class="fas fa-plus"></i> Add</button>
+                                    <!-- <button class="btn btn-success btn-sm ml-auto" @click="openAddModal" v-if="can('create section')"><i class="fas fa-plus"></i> Add</button> -->
                                 </div>
                             </div>
                             <div class="card-tools">
@@ -69,26 +66,17 @@
                                 <thead>
                                     <tr>
                                         <th>Id</th>
-                                        <th>Code</th>
                                         <th>Name</th>
-                                        <th class="text-center">Hour/s</th>
-                                        <th class="text-center">Unit/s</th>
-                                        <th class="text-center">Level</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr v-for="(data, index) in option_users.data" :key="index">
                                         <td>{{data.id|padZero}}</td>
-                                        <td>{{data.code}}</td>
                                         <td>{{data.name}}</td>
-                                        <td class="align-middle text-center">{{moment('2023-01-01 '+data.hour,'H:mm')}}</td>
-                                        <td class="align-middle text-center">{{data.unit.toFixed(1)}}</td>
-                                        <td class="align-middle text-center">{{data.level}}</td>
                                         <td v-html="preferableFormat(data.preferable)"></td>
                                         <td class="text-right">
-                                            <button type="button" class="btn btn-primary btn-sm" @click="openEditModal(data)" v-if="can('edit subject')"><i class="fas fa-edit"></i> Edit</button>
-                                            <button type="button" class="btn btn-danger btn-sm" @click="remove(data.id)" v-if="can('delete subject')"><i class="fas fa-trash-alt"></i> Remove</button>
+                                            <button type="button" class="btn btn-primary btn-sm" @click="openViewTeacherLoad(data)" :disabled="!can('view teacher load')"><i class="far fa-eye"></i> View</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -111,27 +99,21 @@
                     </div>
                     <!-- /.card -->
                 </div>
-                <!-- declare the add modal -->
-                <add-modal @getData="getData"></add-modal>
-                <!-- declare the edit modal -->
-                <edit-modal @getData="getData" :row="selected_user" :page="current_page"></edit-modal>
+                <view-teacher-load :row="selected_faculty"/>
                 </div>
             </div>
         </div>
     </div>
     </template>
     <script>
-    import addModal from "./AddSubject.vue";
-    import EditModal from "./EditSubject.vue";
-    import moment from 'moment';
+    import viewTeacherLoad from './ViewTeacherLoad.vue';
     export default {
         components: {
-            addModal,
-            EditModal,
+            viewTeacherLoad,
         },
         data() {
             return {
-                order_by:'created_at',
+                order_by:'name',
                 sort_by:'DESC',
                 option_users:[],
                 length:10,
@@ -142,6 +124,7 @@
                     id:'',
                 }),
                 error:'',
+                selected_faculty:[],
             }
         },
         methods: {
@@ -156,15 +139,15 @@
                 }
             },
             openAddModal() {
-                $('#add-subject').modal('show');
+                $('#add-section').modal('show');
             },
             openEditModal(data) {
                 this.selected_user = data;
-                $('#edit-subject').modal('show');
+                $('#edit-section').modal('show');
             },
             getData(page){
                 if (typeof page === 'undefined' || page.type == 'keyup'|| page.type == 'change'|| page.type == 'click') {
-                    page = '/api/subject/list/?page=1';
+                    page = '/api/teacher-load/list/?page=1';
                 }
                 this.current_page = page;
                 if (this.timer) {
@@ -208,7 +191,7 @@
                     confirmButtonText: 'Yes, delete it!',
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        axios.delete('/api/subject/delete/'+id)
+                        axios.delete('/api/section/delete/'+id)
                         .then(response => {
                             Swal.fire(
                                 'Deleted!',
@@ -219,16 +202,16 @@
                         })
                     }
                 }).catch(() =>{
-
                     toast.fire({
                         icon: 'error',
                         text: 'Something went wrong!',
                     })
                 });
             },
-            moment: function (date,format) {
-                return moment(date).format(format);
-            }
+            openViewTeacherLoad(data) {
+                this.selected_faculty = data;
+                $('#modal-view-teacher-load').modal('show');
+            },
         },
         created() {
             this.getData();

@@ -13,6 +13,7 @@ use Laravel\Passport\HasApiTokens;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Traits\HasRoles;
 use LaravelAndVueJS\Traits\LaravelPermissionToVueJS;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable
 {
@@ -72,9 +73,17 @@ class User extends Authenticatable
 
     public function my_substitutes(){
         return $this->hasMany(Substitution::class,'assigned_user_id', 'id');
-    } 
+    }
     public function my_substituted(){
         return $this->hasMany(Substitution::class,'substitute_user_id', 'id');
+    }
+
+    public function schedules(){
+        $school_year = DB::table('settings')->where('name','school_year')->pluck('value')->first();
+        return $this->hasMany(Schedule::class,'teacher_user_id', 'id')->
+        where('school_year', $school_year)->
+        orderByRaw('FIELD(day,"mon","tue","wed","thu","fri")')->
+        orderBy('time_start');
     }
     // public function upload_document(){
     //     return $this->hasMany(UploadDocuments::class);

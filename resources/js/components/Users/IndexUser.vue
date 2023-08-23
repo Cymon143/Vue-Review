@@ -66,7 +66,7 @@
                                     <th>Email</th>
                                     <th>Department</th>
                                     <th>Subs. Status</th>
-                                    <th> {{ can('edit user') }}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
