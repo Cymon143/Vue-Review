@@ -26,7 +26,7 @@
                         <div class="card-header p-3">
                             <h3 class="card-title"> </h3>
                             <div class="card-tools float-left">
-                                <div class="input-group input-group-sm" >
+                                <div class="input-group input-group-sm">
                                     <select v-model="length" @change="getData" class="form-control form-control-sm w-auto">
                                         <option value="10">Row: 10</option>
                                         <option value="25">Row: 25</option>

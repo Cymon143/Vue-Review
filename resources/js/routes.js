@@ -41,7 +41,7 @@ const routes = [
     //---------------------------------------------------------END ROLE
     //---------------------------------------------------------PERMISSION
     {
-        path: '/permission',
+        path: '/permission',//icon template
         name: 'permission',
         component: require('./components/Permission/IndexPermission.vue').default
     },
